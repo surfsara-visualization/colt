@@ -1,0 +1,2 @@
+http://stackoverflow.com/questions/156912/sending-a-keyboard-event-from-java-to-any-application-on-screen-keyboard
+http://stackoverflow.com/questions/8299942/what-are-some-algorithms-for-symbol-by-symbol-handwriting-recognition
