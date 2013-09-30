@@ -1,3 +1,4 @@
+package nl.surfsara.visualization.colt;
 // Adapted from http://www.peterfranza.com/2008/09/26/little-endian-input-stream/
 
 import java.io.DataInput;
