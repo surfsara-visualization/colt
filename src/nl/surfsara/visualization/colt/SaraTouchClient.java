@@ -244,7 +244,7 @@ public class SaraTouchClient extends JFrame implements ActionListener, ItemListe
 
         ButtonGroup roi_group = new ButtonGroup();
 
-        region_of_interest = ROI_MIDDLE_2x2;
+        region_of_interest = ROI_WHOLE_SCREEN;
 
         rb_roi_display_0 = new JRadioButton("Display 0 (upper-left)");
         rb_roi_display_1 = new JRadioButton("Display 1");
