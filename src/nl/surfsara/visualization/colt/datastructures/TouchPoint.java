@@ -1,6 +1,6 @@
 package nl.surfsara.visualization.colt.datastructures;
 
-/* Copyright 2013 SURFSara
+/* Copyright 2012-2015 SURFSara
  * 
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.

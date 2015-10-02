@@ -1,6 +1,6 @@
 package nl.surfsara.visualization.colt;
 
-/* Copyright 2013 SURFSara
+/* Copyright 2012-2015 SURFSara
  * 
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -17,5 +17,5 @@ package nl.surfsara.visualization.colt;
 
 public class ColtBuild {
     public final static String revision = "d4f2df91a503c8bff1a48f36349bd71949c9d868+";
-    public final static String build_date = "Mon Sep 30 11:05:23 2013";
+    public final static String build_date = "@build.time@";
 }

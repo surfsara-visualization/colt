@@ -1,6 +1,6 @@
 package nl.surfsara.visualization.colt;
 
-/* Copyright 2013 SURFSara
+/* Copyright 2012-2015 SURFSara
  * 
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -346,15 +346,29 @@ public class SaraTouchClient extends JFrame implements ActionListener, ItemListe
         log_panel.add(log_scroll_pane, BorderLayout.CENTER);
 
         // About
+        
+        java.util.Properties props = new java.util.Properties();
+        
+        try 
+        {
+            java.io.InputStream stream = this.getClass().getResourceAsStream("/colt.properties");  
+            props.load(stream);
+            stream.close();
+        } 
+        catch (Exception e) 
+        {
+            e.printStackTrace();
+        }        
 
         JPanel about_panel = new JPanel();
         about_panel.setLayout(new GridLayout(0, 1));
 
         about_panel.add(new JLabel("COLT - Collaboratorium Touch Client"));
-        about_panel.add(new JLabel("Copyright (C) 2012-2013, SURFsara"));
-        about_panel.add(new JLabel("Revision: " + ColtBuild.revision));
-        about_panel.add(new JLabel("Built " + ColtBuild.build_date));
-
+        about_panel.add(new JLabel("Copyright (C) 2012-2015, SURFsara"));
+        about_panel.add(new JLabel("Version: " + props.getProperty("version")));
+        about_panel.add(new JLabel("Git revision/base: " + props.getProperty("revision")));
+        about_panel.add(new JLabel("Built " + props.getProperty("buildtime") + " by " + props.getProperty("builder")));
+        
         // Tabs
 
         JTabbedPane tabbed_pane;
