@@ -221,8 +221,8 @@ public class SaraTouchClient extends JFrame implements ActionListener, ItemListe
         Border border = BorderFactory.createTitledBorder("Mode");
         panel.setBorder(border);
 
-        rb_control_mouse = new JRadioButton("Control mouse", true);
-        rb_send_tuio_events = new JRadioButton("Send TUIO events"); // XXX
+        rb_control_mouse = new JRadioButton("Control mouse");
+        rb_send_tuio_events = new JRadioButton("Send TUIO events", true); // XXX
                                                                     // rename to
                                                                     // packets
 
@@ -255,9 +255,9 @@ public class SaraTouchClient extends JFrame implements ActionListener, ItemListe
         rb_roi_display_6 = new JRadioButton("Display 6");
         rb_roi_display_7 = new JRadioButton("Display 7 (lower-right)");
         rb_roi_left_2x2 = new JRadioButton("Left 2x2");
-        rb_roi_middle_2x2 = new JRadioButton("Middle 2x2", true);
+        rb_roi_middle_2x2 = new JRadioButton("Middle 2x2");
         rb_roi_right_2x2 = new JRadioButton("Right 2x2");
-        rb_roi_whole_screen = new JRadioButton("Whole screen");
+        rb_roi_whole_screen = new JRadioButton("Whole screen", true);
 
         rb_roi_display_0.addItemListener(this);
         rb_roi_display_1.addItemListener(this);
