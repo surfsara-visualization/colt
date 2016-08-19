@@ -308,23 +308,29 @@ public class SaraTouchClient extends JFrame implements ActionListener, ItemListe
         
         String colt_server = System.getenv("COLT_SERVER");
         String colt_portstring = System.getenv("COLT_PORT");
+        String tuio_portstring = System.getenv("COLT_TUIO_DESTINATION_PORT");
         
         if (colt_server == null)
             colt_server = "145.100.39.11";  // Linda
         if (colt_portstring == null)
             colt_portstring = "12345";
+        if (tuio_portstring == null)
+            tuio_portstring = "3333";
 
-        JLabel lbl_host = new JLabel("Touch server host");
-        tf_host = new JTextField();
-        tf_host.setText(colt_server); 
-        advanced_panel.add(lbl_host);
-        advanced_panel.add(tf_host);
+        advanced_panel.add(new JLabel("Colt server host"));
+        tf_colt_host = new JTextField();
+        tf_colt_host.setText(colt_server); 
+        advanced_panel.add(tf_colt_host);
 
-        JLabel lbl_port = new JLabel("Touch server port");
-        tf_port = new JTextField();
-        tf_port.setText(colt_portstring);
-        advanced_panel.add(lbl_port);
-        advanced_panel.add(tf_port);
+        advanced_panel.add(new JLabel("Colt server port"));
+        tf_colt_port = new JTextField();
+        tf_colt_port.setText(colt_portstring);
+        advanced_panel.add(tf_colt_port);
+        
+        advanced_panel.add(new JLabel("TUIO destination port"));
+        tf_tuio_destination_port = new JTextField();
+        tf_tuio_destination_port.setText(tuio_portstring);
+        advanced_panel.add(tf_tuio_destination_port);
 
         // Calibration
 
@@ -472,8 +478,8 @@ public class SaraTouchClient extends JFrame implements ActionListener, ItemListe
     public void actionPerformed(ActionEvent event) {
         if (event.getSource() == bt_connect_to_server) {
             if (!connected) {
-                String host = tf_host.getText();
-                int port = Integer.parseInt(tf_port.getText());
+                String host = tf_colt_host.getText();
+                int port = Integer.parseInt(tf_colt_port.getText());
                 connect(host, port);
             } else
                 disconnect();
@@ -797,7 +803,8 @@ public class SaraTouchClient extends JFrame implements ActionListener, ItemListe
 
         byte[] payload = bos.toByteArray();
         // System.out.println("Sending TUIO packet with payload size "+payload.length);
-        DatagramPacket packet = new DatagramPacket(payload, payload.length, localhost_address, 3333);
+        int port = Integer.parseInt(tf_tuio_destination_port.getText());
+        DatagramPacket packet = new DatagramPacket(payload, payload.length, localhost_address, port);
 
         try {
             outgoing_tuio_socket.send(packet);
@@ -901,7 +908,8 @@ public class SaraTouchClient extends JFrame implements ActionListener, ItemListe
 
     protected Dimension screen_size;
 
-    private final JTextField tf_host;
-    private final JTextField tf_port;
+    private final JTextField tf_colt_host;
+    private final JTextField tf_colt_port;
+    private final JTextField tf_tuio_destination_port;
     protected JTextArea ta_log;
 }
