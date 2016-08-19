@@ -59,6 +59,10 @@ import javax.swing.JTextField;
 import javax.swing.ScrollPaneConstants;
 import javax.swing.border.Border;
 
+import joptsimple.OptionParser;
+import joptsimple.OptionSet;
+import joptsimple.OptionException;
+
 import nl.surfsara.visualization.colt.datastructures.TouchPoint;
 import nl.surfsara.visualization.colt.datastructures.TuioTouchHistory;
 
@@ -70,8 +74,9 @@ import nl.surfsara.visualization.colt.datastructures.TuioTouchHistory;
  * - when no TUIO events are available, don't send anything? we currently only
  * send an fseq increase, but no touches
  */
-public class SaraTouchClient extends JFrame implements ActionListener, ItemListener, WindowListener, ComponentListener,
-        TouchEventHandler {
+public class SaraTouchClient extends JFrame implements ActionListener, 
+        ItemListener, WindowListener, ComponentListener, TouchEventHandler {
+            
     private static final long serialVersionUID = 1566656153975345778L;
 
     // All in millimeters
@@ -171,8 +176,55 @@ public class SaraTouchClient extends JFrame implements ActionListener, ItemListe
     static final int TS_MOVED = 1;
     static final int TS_RELEASED = 2;
 
-    public static void main(String[] args) throws Exception {
+    public static void main(String[] args) throws Exception 
+    {
         SaraTouchClient client = new SaraTouchClient();
+        
+        OptionParser    parser = new OptionParser("ch:p:t");
+        OptionSet       options = null;
+
+        try
+        {
+            options = parser.parse(args);
+        }
+        catch (Exception e)
+        {
+            System.out.println("Could not parse command-line options:\n"+e);
+            System.out.println();
+            System.out.println("-h <host>   Server host");
+            System.out.println("-p <port>   Server port");
+            System.out.println("-t          Send TUIO events instead of mouse events");
+            System.out.println("-c          Connect after starting up");
+            System.out.println();
+            System.exit(-1);
+        }
+
+        if (options.has("h"))
+        {
+            Object o = options.valueOf("h");
+            if (o != null)
+            {
+                String s = (String)o;
+                client.setHost(s);
+            }
+        }
+
+        if (options.has("p"))
+        {
+            Object o = options.valueOf("p");
+            if (o != null)
+            {
+                int i = Integer.parseInt((String)o);
+                client.setPort(i);
+            }
+        }
+    
+        if (options.has("t"))
+            client.setModeToTUIO();
+
+        if (options.has("c"))
+            client.connect();
+        
         client.setSize(600, 500);
         client.setVisible(true);
     }
@@ -402,7 +454,27 @@ public class SaraTouchClient extends JFrame implements ActionListener, ItemListe
         addComponentListener(this);
     }
 
-    protected void connect(String host, int port) {
+    public void setHost(String host)
+    {
+        tf_colt_host.setText(host);
+    }
+
+    public void setPort(int port)
+    {
+        tf_colt_port.setText(Integer.toString(port));
+    }
+
+    public void setModeToTUIO()
+    {
+        rb_control_mouse.setSelected(false);
+        rb_send_tuio_events.setSelected(true);
+    }    
+
+    protected void connect() 
+    {
+        String  host = tf_colt_host.getText();
+        int     port = Integer.parseInt(tf_colt_port.getText());
+        
         InetSocketAddress addr = new InetSocketAddress(host, port);
 
         try {
@@ -477,11 +549,9 @@ public class SaraTouchClient extends JFrame implements ActionListener, ItemListe
     @Override
     public void actionPerformed(ActionEvent event) {
         if (event.getSource() == bt_connect_to_server) {
-            if (!connected) {
-                String host = tf_colt_host.getText();
-                int port = Integer.parseInt(tf_colt_port.getText());
-                connect(host, port);
-            } else
+            if (!connected)
+                connect();
+            else
                 disconnect();
 
         } else if (event.getSource() == bt_calibrate) {
