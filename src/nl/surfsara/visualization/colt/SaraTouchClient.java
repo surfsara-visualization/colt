@@ -305,16 +305,24 @@ public class SaraTouchClient extends JFrame implements ActionListener, ItemListe
         JPanel advanced_panel = new JPanel();
 
         advanced_panel.setLayout(new GridLayout(3, 2));
+        
+        String colt_server = System.getenv("COLT_SERVER");
+        String colt_portstring = System.getenv("COLT_PORT");
+        
+        if (colt_server == null)
+            colt_server = "145.100.39.11";  // Linda
+        if (colt_portstring == null)
+            colt_portstring = "12345";
 
         JLabel lbl_host = new JLabel("Touch server host");
         tf_host = new JTextField();
-        tf_host.setText("145.100.39.11"); // linda
+        tf_host.setText(colt_server); 
         advanced_panel.add(lbl_host);
         advanced_panel.add(tf_host);
 
         JLabel lbl_port = new JLabel("Touch server port");
         tf_port = new JTextField();
-        tf_port.setText("12345");
+        tf_port.setText(colt_portstring);
         advanced_panel.add(lbl_port);
         advanced_panel.add(tf_port);
 
@@ -364,7 +372,7 @@ public class SaraTouchClient extends JFrame implements ActionListener, ItemListe
         about_panel.setLayout(new GridLayout(0, 1));
 
         about_panel.add(new JLabel("COLT - Collaboratorium Touch Client"));
-        about_panel.add(new JLabel("Copyright (C) 2012-2015, SURFsara"));
+        about_panel.add(new JLabel("Copyright (C) 2012-2016, SURFsara"));
         about_panel.add(new JLabel("Version: " + props.getProperty("version")));
         about_panel.add(new JLabel("Git revision/base: " + props.getProperty("revision")));
         about_panel.add(new JLabel("Built " + props.getProperty("buildtime") + " by " + props.getProperty("builder")));
